@@ -20,7 +20,7 @@ const Content: React.FC = () => {
   useEffect(() => {
     setIsForecastShown(false)
     setWeatherData(null)
-    setMapTitle("wybierz swój region xx")
+    setMapTitle("wybierz swój region")
 
     mapRef.current!?.querySelectorAll(".fill-blue2").forEach((item) => {
       item.classList.remove("fill-blue2")
