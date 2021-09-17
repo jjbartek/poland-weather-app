@@ -20,7 +20,7 @@ const Content: React.FC = () => {
   useEffect(() => {
     setIsForecastShown(false)
     setWeatherData(null)
-    setMapTitle("wybierz swój region")
+    setMapTitle("wybierz swój region xx")
 
     mapRef.current!?.querySelectorAll(".fill-blue2").forEach((item) => {
       item.classList.remove("fill-blue2")
@@ -62,7 +62,7 @@ const Content: React.FC = () => {
   const updateWeather = (lon: number, lat: number) => {
     setLoadingStatus(true)
 
-    fetch(`https://api.openweathermap.org/data/2.5/onecall?lon=${lon}&lat=${lat}&appid=${process.env.OWM_API_KEY}&lang=pl&units=metric`)
+    fetch(`https://api.openweathermap.org/data/2.5/onecall?lon=${lon}&lat=${lat}&appid=${process.env.GATSBY_OWM_KEY}&lang=pl&units=metric`)
       .then((response) => response.json())
       .then((response: OWMOneCallResponse) => {
         if (response.cod !== 200 && response.cod !== undefined) {

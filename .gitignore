@@ -68,3 +68,4 @@ README.html
 src/styles/**/*.d.ts
 
 package-lock.json
+.vercel
