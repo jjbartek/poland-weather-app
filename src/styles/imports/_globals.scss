@@ -1,0 +1,9 @@
+@import "./_vars";
+@import "~include-media";
+
+$breakpoints: (
+  small: 320px,
+  medium: 768px,
+  large: 1024px,
+  xxl: 1440px,
+);

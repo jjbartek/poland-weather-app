@@ -1,0 +1,50 @@
+{
+  "name": "poland-weather-app",
+  "version": "0.0.1",
+  "description": "A Gatsby app for displaying weather in Poland",
+  "author": "jjbartek",
+  "license": "CC-BY-1.0",
+  "scripts": {
+    "start": "gatsby develop",
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve"
+  },
+  "dependencies": {
+    "@babel/core": "^7.5.5",
+    "@types/classnames": "^2.2.10",
+    "@types/react-helmet": "^6.1.0",
+    "chart.js": "^3.2.1",
+    "classnames": "^2.2.6",
+    "gatsby-plugin-google-fonts": "^1.0.1",
+    "gatsby-plugin-react-helmet": "^3.3.11",
+    "gatsby-plugin-react-svg": "^3.0.1",
+    "gatsby-plugin-typescript": "^2.1.2",
+    "include-media": "^1.4.10",
+    "lodash": "^4.17.21",
+    "normalize.css": "^8.0.1",
+    "polskie-miejscowosci": "^1.0.2",
+    "react-chartjs-2": "^3.0.3",
+    "react-google-places-autocomplete": "^3.3.2-alpha.0",
+    "react-helmet": "^6.1.0",
+    "swiper": "^6.8.0",
+    "typescript": "^3.5.3",
+    "webpack": "^4.36.1"
+  },
+  "devDependencies": {
+    "@hot-loader/react-dom": "^17.0.1",
+    "@mdx-js/react": "^1.0.0-rc.0",
+    "acorn": "^6.4.1",
+    "gatsby": "^2.24.64",
+    "gatsby-plugin-scss-typescript": "^4.0.13",
+    "gatsby-plugin-tslint": "^0.0.2",
+    "node-sass": "^4.14.1",
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1",
+    "react-refresh": "^0.8.3",
+    "tslint": "^5.18.0",
+    "tslint-loader": "^3.5.4",
+    "tslint-react": "^4.0.0",
+    "typescript-plugin-css-modules": "^2.7.0"
+  }
+}

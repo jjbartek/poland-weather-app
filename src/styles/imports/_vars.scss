@@ -1,0 +1,19 @@
+$font: "Poppins", sans-serif;
+
+$green: #12942e;
+$grey100: #f6f6f6;
+$grey200: #e4e4e4;
+$grey300: #a4a4a4;
+$dark: hsl(0, 0%, 0%);
+$light: #ffffff;
+$blue: #0066ff;
+$blue2: #0947a4;
+
+$mq-breakpoints: (
+  mobile: 320px,
+  tablet: 740px,
+  desktop: 980px,
+  wide: 1300px,
+);
+
+$border-radius: 5px;

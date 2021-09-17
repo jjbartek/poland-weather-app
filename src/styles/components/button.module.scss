@@ -1,0 +1,47 @@
+.button {
+  padding: 1.8rem;
+  border-radius: 5px;
+  outline: none;
+  border: 0;
+  cursor: pointer;
+  box-sizing: border-box;
+
+  @include media("<medium") {
+    padding: 2rem;
+  }
+
+  &--green {
+    background-color: $green;
+    color: $light;
+    transition: opacity 0.3s;
+
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+
+  &--side-right {
+    flex: 0 0 15%;
+    margin-left: 5%;
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    i {
+      font-size: 2.4rem;
+      @include media(">=large") {
+        font-size: 3rem;
+      }
+    }
+  }
+
+  &--mobile-full-size {
+    @include media("<large") {
+      flex: 1 0 100%;
+      margin: 3rem 0 0 0;
+    }
+  }
+}

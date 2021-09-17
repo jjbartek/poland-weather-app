@@ -1,0 +1,81 @@
+@font-face {
+  font-family: "icomoon";
+  src: url("../fonts/icomoon.eot");
+  src: url("../fonts/icomoon.eot") format("embedded-opentype"), url("../fonts/icomoon.ttf") format("truetype"),
+    url("../fonts/icomoon.woff") format("woff"), url("../fonts/icomoon.svg") format("svg");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: $font;
+  background: $grey100;
+  color: $dark;
+  font-size: 1.6rem;
+}
+
+.wrapper {
+  max-width: 1440px;
+  width: 100%;
+  padding: 0 20px;
+  margin: 0 auto;
+  box-sizing: border-box;
+
+  @include media(">=medium") {
+    padding: 0 35px;
+  }
+
+  &--center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.min-full-height {
+  min-height: calc(100vh - 75px);
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  box-sizing: border-box;
+
+  @include media(">=medium") {
+    min-height: calc(100vh - 90px);
+  }
+}
+
+.fill-blue2 {
+  fill: $blue2;
+}
+
+.page-headline {
+  color: $blue;
+  font-weight: 800;
+  font-size: 3rem;
+}
+
+.page-description {
+  color: $grey300;
+  font-weight: 200;
+  font-size: 2.3rem;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+.mobile-shown {
+  display: none;
+  @include media("<large") {
+    display: block;
+  }
+}

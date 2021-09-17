@@ -1,0 +1,8 @@
+{
+    "html-css-class-completion.enableScssFindUsage": true,
+    "html-css-class-completion.enableFindUsage": true,
+    "html-css-class-completion.excludeGlobPattern": "{node_modules,doc,docs,.bundle,vendor,.cache}/**",
+    "html-css-class-completion.includeGlobPattern": "**/*.{scss}",
+    "markdown-todo.sortByCount": false
+    
+}
