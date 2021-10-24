@@ -90,7 +90,7 @@ const Header: React.FC<{
   }
 
   const handleGeoLocationClick = () => {
-    if (navigator) {
+    if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
       navigator.geolocation.getCurrentPosition(handleGeoLocationSuccess, handleGeoLocationError)
     }
   }
@@ -200,7 +200,9 @@ const Header: React.FC<{
           </>
         )}
 
-        {navigator && navigator.geolocation && <Icon onClick={handleGeoLocationClick} name="location" className={headerStyles.headerLocation} />}
+        {typeof window !== "undefined" && typeof window.navigator !== "undefined" && navigator.geolocation && (
+          <Icon onClick={handleGeoLocationClick} name="location" className={headerStyles.headerLocation} />
+        )}
       </div>
     </header>
   )
