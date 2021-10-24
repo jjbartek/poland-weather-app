@@ -1,17 +1,18 @@
-import { Link } from "gatsby"
-import React, { useEffect, useState, useRef } from "react"
-import { headerStyles } from "../styles/components"
-import { Icon } from "../components"
-import data from "polskie-miejscowosci"
 import classNames from "classnames"
-import { Locality, isLocality, isVoivodeship, Place } from "../imports"
+import { Link } from "gatsby"
 import _ from "lodash"
+import data from "polskie-miejscowosci"
+import React, { useEffect, useRef, useState } from "react"
+import { Icon } from "../components"
+import { GeoLocation, isLocality, isVoivodeship, Locality, Place } from "../imports"
+import { isGeoLocation } from "../imports/typeGuards"
+import { headerStyles } from "../styles/components"
 
 const Header: React.FC<{
-  setLocality: (locality: Locality) => void
+  setContentData: (place: Place) => void
   closeWeather: () => void
   contentData: Place
-}> = ({ setLocality, closeWeather, contentData }) => {
+}> = ({ setContentData, closeWeather, contentData }) => {
   const resultRef = useRef<HTMLUListElement>(null)
   const fieldRef = useRef<HTMLTextAreaElement>(null)
   const [fieldValue, setFieldValue] = useState("")
@@ -41,7 +42,7 @@ const Header: React.FC<{
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       if (isFieldFocused && searchResult.length > 0 && searchResult[focusedItem]) {
-        setLocality(searchResult[focusedItem])
+        setContentData(searchResult[focusedItem])
       }
 
       e.preventDefault()
@@ -62,13 +63,45 @@ const Header: React.FC<{
     }
   }
 
+  const handleCloseWeatherClick = () => {
+    closeWeather()
+  }
+
+  const handleGeoLocationSuccess = ({ coords: { latitude, longitude } }: GeolocationPosition) => {
+    const xMin = 14.116
+    const xMax = 24.15
+
+    const yMin = 49
+    const yMax = 54.83
+
+    if (latitude >= yMin && latitude <= yMax && longitude >= xMin && longitude <= xMax) {
+      setContentData({
+        latitude,
+        longitude,
+      } as GeoLocation)
+      console.log(latitude, longitude)
+    } else {
+      alert("Dane są dostępne wyłącznie dla użytkowników na terenie Polski.")
+    }
+  }
+
+  const handleGeoLocationError = () => {
+    alert("Wystąpił błąd podczas próby lokalizacji.")
+  }
+
+  const handleGeoLocationClick = () => {
+    navigator.geolocation.getCurrentPosition(handleGeoLocationSuccess, handleGeoLocationError)
+  }
+
   useEffect(() => {
     if (fieldValue.length >= 2) {
       const result = data.filter((i) => new RegExp("^(?:^|\\s)" + _.escapeRegExp(fieldValue), "i").test(i.Name))
 
       setSearchResult(result)
       setFocusedItem(0)
-    } else if (searchResult.length > 0) setSearchResult([])
+    } else if (searchResult.length > 0) {
+      setSearchResult([])
+    }
   }, [fieldValue])
 
   useEffect(() => {
@@ -121,8 +154,8 @@ const Header: React.FC<{
       <div className={`wrapper ${headerStyles.headerContainer}`}>
         {contentData !== null ? (
           <>
-            <span onClick={() => closeWeather()} className={headerStyles.headerIcon}>
-              <Icon name="arrowLeft"></Icon>
+            <span onClick={handleCloseWeatherClick} className={headerStyles.headerIcon}>
+              <Icon name="arrowLeft" />
             </span>
             <div className={headerStyles.headerTitle}>
               {isLocality(contentData) && (
@@ -131,12 +164,13 @@ const Header: React.FC<{
                 </div>
               )}
               {isVoivodeship(contentData) && <div className={headerStyles.headerTitle}>{contentData.name}</div>}
+              {isGeoLocation(contentData) && <div className={headerStyles.headerTitle}>Twoja lokalizacja</div>}
             </div>
           </>
         ) : (
           <>
             <Link to="/" className={headerStyles.headerIcon}>
-              <Icon name="weather"></Icon>
+              <Icon name="weather" />
             </Link>
             <textarea
               className={headerStyles.headerField}
@@ -146,7 +180,7 @@ const Header: React.FC<{
               onKeyDown={handleArrows}
               onKeyPress={handleKeyPress}
               ref={fieldRef}
-            ></textarea>
+            />
 
             {searchResult.length > 0 && isFieldFocused && (
               <ul ref={resultRef} className={headerStyles.headerResults}>
@@ -154,7 +188,7 @@ const Header: React.FC<{
                   <li
                     key={i}
                     className={classNames(headerStyles.headerResultsItem, i === focusedItem ? headerStyles.headerResultsItemActive : "")}
-                    onClick={() => setLocality(item)}
+                    onClick={() => setContentData(item)}
                   >
                     {item.Name}, {item.Province}, p. {item.District}
                   </li>
@@ -164,7 +198,7 @@ const Header: React.FC<{
           </>
         )}
 
-        <Icon name="location" className={headerStyles.headerLocation} />
+        {navigator.geolocation && <Icon onClick={handleGeoLocationClick} name="location" className={headerStyles.headerLocation} />}
       </div>
     </header>
   )

@@ -172,4 +172,9 @@ export interface OWMDailyForecast {
   uvi: number
 }
 
-export type Place = Voivodeship | Locality | null
+export interface GeoLocation {
+  longitude: number
+  latitude: number
+}
+
+export type Place = GeoLocation | Voivodeship | Locality | null

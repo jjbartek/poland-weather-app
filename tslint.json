@@ -9,7 +9,8 @@
     "semicolon": [true, "never"],
     "trailing-comma": [false],
     "no-console": [false],
-    "max-line-length": [false]
+    "max-line-length": [false],
+    "jsx-no-lambda": [false]
   },
   "rulesDirectory": []
 }

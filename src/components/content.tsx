@@ -3,8 +3,8 @@ import React, { useEffect, useRef, useState } from "react"
 import { Loader, Poland, Weather } from "."
 import { Forecast } from "../components"
 import Header from "../components/header"
-import { Locality, OWMOneCallResponse, Place } from "../imports/interfaces"
-import { isLocality, isVoivodeship } from "../imports/typeGuards"
+import { OWMOneCallResponse, Place } from "../imports/interfaces"
+import { isGeoLocation, isLocality, isVoivodeship } from "../imports/typeGuards"
 import { Voivodeships } from "../mocks"
 import { contentStyles } from "../styles/components"
 import Icon from "./icon"
@@ -34,6 +34,9 @@ const Content: React.FC = () => {
       setMapTitle(contentData.name)
 
       mapRef.current!?.querySelector(`#${contentData.slug}`)?.classList.add("fill-blue2")
+    } else if (isGeoLocation(contentData)) {
+      updateWeather(contentData.longitude, contentData.latitude)
+      setMapTitle(`Twoja lokalizacja`)
     }
   }, [contentData])
 
@@ -79,8 +82,8 @@ const Content: React.FC = () => {
       })
   }
 
-  const handleLocalitySet = (locality: Locality) => {
-    setContentData(locality)
+  const handleContentDataSet = (place: Place) => {
+    setContentData(place)
   }
 
   const handleIsForecastShownChange = () => {
@@ -92,6 +95,8 @@ const Content: React.FC = () => {
       return `${contentData.name}, Polska`
     } else if (isLocality(contentData)) {
       return `${contentData.Name}, p. ${contentData.District}`
+    } else {
+      return `Twoja lokalizacja`
     }
   }
 
@@ -122,7 +127,7 @@ const Content: React.FC = () => {
 
   return (
     <>
-      <Header setLocality={handleLocalitySet} closeWeather={weatherClosed} contentData={contentData} />
+      <Header setContentData={handleContentDataSet} closeWeather={weatherClosed} contentData={contentData} />
       <div className={contentStyles.content}>
         <div className={classNames("wrapper", contentStyles.contentContainer)}>
           <div className={classNames(contentStyles.contentController, contentData !== null && contentStyles.contentControllerHandled)}>
@@ -136,6 +141,18 @@ const Content: React.FC = () => {
                     style={{
                       bottom: `${getMapPosition(contentData.Longitude, contentData.Latitude).y}%`,
                       left: `${getMapPosition(contentData.Longitude, contentData.Latitude).x}%`,
+                    }}
+                  />
+                </>
+              )}
+              {isGeoLocation(contentData) && (
+                <>
+                  <Icon
+                    name="point"
+                    className={contentStyles.contentPoint}
+                    style={{
+                      bottom: `${getMapPosition(contentData.longitude, contentData.latitude).y}%`,
+                      left: `${getMapPosition(contentData.longitude, contentData.latitude).x}%`,
                     }}
                   />
                 </>
