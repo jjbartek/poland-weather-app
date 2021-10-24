@@ -90,7 +90,9 @@ const Header: React.FC<{
   }
 
   const handleGeoLocationClick = () => {
-    navigator.geolocation.getCurrentPosition(handleGeoLocationSuccess, handleGeoLocationError)
+    if (navigator) {
+      navigator.geolocation.getCurrentPosition(handleGeoLocationSuccess, handleGeoLocationError)
+    }
   }
 
   useEffect(() => {
@@ -198,7 +200,7 @@ const Header: React.FC<{
           </>
         )}
 
-        {navigator.geolocation && <Icon onClick={handleGeoLocationClick} name="location" className={headerStyles.headerLocation} />}
+        {navigator && navigator.geolocation && <Icon onClick={handleGeoLocationClick} name="location" className={headerStyles.headerLocation} />}
       </div>
     </header>
   )
