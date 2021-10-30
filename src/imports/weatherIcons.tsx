@@ -1,10 +1,10 @@
-import { iconStyles } from "../styles/components"
+import { IconStyles } from "../Styles/Components"
 
 interface IconNames {
-  [name: string]: keyof typeof iconStyles
+  [name: string]: keyof typeof IconStyles
 }
 
-const weatherIcons: IconNames = {
+const WeatherIcons: IconNames = {
   "01d": "sun",
   "01n": "moon",
   "02d": "cloudSun",
@@ -25,4 +25,4 @@ const weatherIcons: IconNames = {
   "50n": "fogMoon",
 }
 
-export default weatherIcons
+export default WeatherIcons

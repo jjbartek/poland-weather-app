@@ -4,7 +4,7 @@ module.exports = {
       resolve: `gatsby-plugin-scss-typescript`,
       options: {
         sassLoaderOptions: {
-          data: `@import "./src/styles/imports/_globals.scss";`,
+          data: `@import "./src/Styles/Imports/_globals.scss";`,
         },
       },
     },

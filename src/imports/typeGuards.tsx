@@ -1,4 +1,4 @@
-import { GeoLocation, Locality, Place, Voivodeship } from "./interfaces"
+import { GeoLocation, Locality, Place, Voivodeship } from "./Interfaces"
 
 export const isVoivodeship = (item: Place): item is Voivodeship => {
   return item !== null && (item as Voivodeship).capital !== undefined

@@ -1,5 +1,5 @@
 import React from "react"
-import { VoivodeshipNames } from "../imports/enums"
+import { VoivodeshipNames } from "../Imports/Enums"
 
 export interface Vovoidenship {
   api_id: number

@@ -1,4 +1,4 @@
-export { default as icon } from "./icon.svg"
-export { default as logo } from "./logo.svg"
-export { default as preloader } from "./preloader.svg"
-export { default as poland } from "./poland.svg"
+export { default as Icon } from "./Icon.svg"
+export { default as Logo } from "./Logo.svg"
+export { default as Preloader } from "./Preloader.svg"
+export { default as Poland } from "./Poland.svg"

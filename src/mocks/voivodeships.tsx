@@ -1,4 +1,4 @@
-import { VoivodeshipNames } from "../imports/enums"
+import { VoivodeshipNames } from "../Imports/Enums"
 
 export const mockVoivodeships = [
   {

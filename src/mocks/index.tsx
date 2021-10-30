@@ -1,1 +1,1 @@
-export { default as Voivodeships } from "./voivodeships"
+export { default as Voivodeships } from "./Voivodeships"

@@ -10,7 +10,8 @@
     "trailing-comma": [false],
     "no-console": [false],
     "max-line-length": [false],
-    "jsx-no-lambda": [false]
+    "jsx-no-lambda": [false],
+    "ordered-imports": [false]
   },
   "rulesDirectory": []
 }

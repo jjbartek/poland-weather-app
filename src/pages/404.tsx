@@ -1,5 +1,5 @@
 import React from "react"
-import { global as Layout } from "../layouts"
+import { Global as Layout } from "../Layouts"
 
 const Index = () => {
   return <Layout>404 - page not found</Layout>

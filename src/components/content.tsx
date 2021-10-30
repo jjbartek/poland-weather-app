@@ -1,13 +1,11 @@
-import classNames from "classnames"
+import { Forecast, Header, Icon, Loader, Poland, Weather } from "."
+import { OWMOneCallResponse, Place } from "../Imports/Interfaces"
 import React, { useEffect, useRef, useState } from "react"
-import { Loader, Poland, Weather } from "."
-import { Forecast } from "../components"
-import Header from "../components/header"
-import { OWMOneCallResponse, Place } from "../imports/interfaces"
-import { isGeoLocation, isLocality, isVoivodeship } from "../imports/typeGuards"
-import { Voivodeships } from "../mocks"
-import { contentStyles } from "../styles/components"
-import Icon from "./icon"
+import { isGeoLocation, isLocality, isVoivodeship } from "../Imports/TypeGuards"
+
+import { ContentStyles } from "../Styles/Components"
+import { Voivodeships } from "../Mocks"
+import classNames from "classnames"
 
 const Content: React.FC = () => {
   const [contentData, setContentData] = useState<Place>(null)
@@ -105,6 +103,7 @@ const Content: React.FC = () => {
   }
 
   const getMapPosition = (Longitude: number, Latitude: number): { x: number; y: number } => {
+    // MOVE TO LOCATION.TSX COMMON
     // x,y are Poland's points of extremity
 
     const xMin = 14.116
@@ -128,16 +127,16 @@ const Content: React.FC = () => {
   return (
     <>
       <Header setContentData={handleContentDataSet} closeWeather={weatherClosed} contentData={contentData} />
-      <div className={contentStyles.content}>
-        <div className={classNames("wrapper", contentStyles.contentContainer)}>
-          <div className={classNames(contentStyles.contentController, contentData !== null && contentStyles.contentControllerHandled)}>
-            <div className={contentStyles.contentWrap}>
-              <Poland ref={mapRef} className={contentStyles.contentMap} />
+      <div className={ContentStyles.content}>
+        <div className={classNames("wrapper", ContentStyles.contentContainer)}>
+          <div className={classNames(ContentStyles.contentController, contentData !== null && ContentStyles.contentControllerHandled)}>
+            <div className={ContentStyles.contentWrap}>
+              <Poland ref={mapRef} className={ContentStyles.contentMap} />
               {isLocality(contentData) && (
                 <>
                   <Icon
                     name="point"
-                    className={contentStyles.contentPoint}
+                    className={ContentStyles.contentPoint}
                     style={{
                       bottom: `${getMapPosition(contentData.Longitude, contentData.Latitude).y}%`,
                       left: `${getMapPosition(contentData.Longitude, contentData.Latitude).x}%`,
@@ -149,7 +148,7 @@ const Content: React.FC = () => {
                 <>
                   <Icon
                     name="point"
-                    className={contentStyles.contentPoint}
+                    className={ContentStyles.contentPoint}
                     style={{
                       bottom: `${getMapPosition(contentData.longitude, contentData.latitude).y}%`,
                       left: `${getMapPosition(contentData.longitude, contentData.latitude).x}%`,
@@ -158,10 +157,10 @@ const Content: React.FC = () => {
                 </>
               )}
             </div>
-            <h1 className={contentStyles.contentTitle}>{mapTitle}</h1>
+            <h1 className={ContentStyles.contentTitle}>{mapTitle}</h1>
           </div>
           {contentData !== null && (
-            <div className={classNames(contentStyles.contentSideBar, loadingStatus && contentStyles.contentSideBarCentered)}>
+            <div className={classNames(ContentStyles.contentSideBar, loadingStatus && ContentStyles.contentSideBarCentered)}>
               {!loadingStatus && weatherData !== null ? (
                 <Weather title={getWeatherTitle()} weatherData={weatherData} handleIsForecastShownChange={handleIsForecastShownChange} />
               ) : (

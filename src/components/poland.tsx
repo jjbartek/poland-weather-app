@@ -1,5 +1,5 @@
 import React from "react"
-import { VoivodeshipNames } from "../imports/enums"
+import { VoivodeshipNames } from "../Imports/Enums"
 
 const Poland = React.forwardRef<SVGSVGElement, React.HTMLProps<SVGSVGElement>>(({ className }, ref) => (
   <svg style={{ maxWidth: "548px" }} viewBox="0 0 548 501" fill="#0066ff" xmlns="http://www.w3.org/2000/svg" ref={ref} className={className}>

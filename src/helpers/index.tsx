@@ -1,1 +1,1 @@
-export { default as getDateFromTimestamp } from "./getDateFromTimestamp"
+export { default as GetDateFromTimestamp } from "./GetDateFromTimestamp"

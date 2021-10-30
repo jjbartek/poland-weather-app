@@ -1,7 +1,4 @@
-const getDateFromTimestamp = (
-  timestamp: number,
-  type: "time" | "date" | "day"
-): string => {
+const GetDateFromTimestamp = (timestamp: number, type: "time" | "date" | "day"): string => {
   if (type === "date") {
     return new Date(timestamp * 1000).toLocaleDateString()
   } else if (type === "time") {
@@ -16,4 +13,4 @@ const getDateFromTimestamp = (
   }
 }
 
-export default getDateFromTimestamp
+export default GetDateFromTimestamp

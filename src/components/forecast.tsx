@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import "swiper/swiper.scss"
-import { Icon } from "../components"
-import { getDateFromTimestamp } from "../helpers"
-import { weatherIcons } from "../imports"
-import { OWMDailyForecast } from "../imports/interfaces"
-import { forecastStyles } from "../styles/components"
+import { Icon } from "."
+import { GetDateFromTimestamp } from "../Helpers"
+import { WeatherIcons } from "../Imports"
+import { OWMDailyForecast } from "../Imports/Interfaces"
+import { ForecastStyles } from "../Styles/Components"
 interface Props {
   data: OWMDailyForecast[] | null
 }
@@ -20,10 +20,10 @@ const Forecast: React.FC<Props> = ({ data }) => {
   })
 
   return (
-    <section ref={forecastRef} className={forecastStyles.forecast}>
-      <div className={forecastStyles.forecastWrapper}>
-        <h1 className={forecastStyles.forecastTitle}>Prognoza</h1>
-        <div className={forecastStyles.forecastContainer}>
+    <section ref={forecastRef} className={ForecastStyles.forecast}>
+      <div className={ForecastStyles.forecastWrapper}>
+        <h1 className={ForecastStyles.forecastTitle}>Prognoza</h1>
+        <div className={ForecastStyles.forecastContainer}>
           <Swiper
             spaceBetween={17}
             slidesPerView="auto"
@@ -37,24 +37,24 @@ const Forecast: React.FC<Props> = ({ data }) => {
             {data !== null &&
               data.map((day) => (
                 <SwiperSlide key={day.dt}>
-                  <div className={forecastStyles.forecastItem}>
-                    <p className={forecastStyles.forecastItemHeading}>
-                      {getDateFromTimestamp(day.dt, "day").toUpperCase()}
-                      <span> | {getDateFromTimestamp(day.dt, "date")}</span>
+                  <div className={ForecastStyles.forecastItem}>
+                    <p className={ForecastStyles.forecastItemHeading}>
+                      {GetDateFromTimestamp(day.dt, "day").toUpperCase()}
+                      <span> | {GetDateFromTimestamp(day.dt, "date")}</span>
                     </p>
-                    <div className={forecastStyles.forecastItemWeatherGroup}>
-                      <Icon name={weatherIcons[day.weather[0].icon]} />
-                      <p className={forecastStyles.forecastItemTemperature}>
+                    <div className={ForecastStyles.forecastItemWeatherGroup}>
+                      <Icon name={WeatherIcons[day.weather[0].icon]} />
+                      <p className={ForecastStyles.forecastItemTemperature}>
                         {Math.round(day.temp.max)} <sup>°C</sup>
                       </p>
-                      <p className={forecastStyles.forecastItemDescription}>{day.weather[0].description}</p>
+                      <p className={ForecastStyles.forecastItemDescription}>{day.weather[0].description}</p>
                     </div>
-                    <div className={forecastStyles.forecastItemStats}>
-                      <div className={forecastStyles.forecastItemStatsRow}>
+                    <div className={ForecastStyles.forecastItemStats}>
+                      <div className={ForecastStyles.forecastItemStatsRow}>
                         <Icon name="pressure" />
                         {day.pressure} hPa
                       </div>
-                      <div className={forecastStyles.forecastItemStatsRow}>
+                      <div className={ForecastStyles.forecastItemStatsRow}>
                         <Icon name="wind" />
                         {day.wind_speed} m/s
                       </div>

@@ -1,4 +1,4 @@
-export { default as weatherIcons } from "./weatherIcons"
-export { VoivodeshipNames } from "./enums"
-export { OWMCurrentResponse, Voivodeship, OWMOneCallResponse, OWMDailyForecast, Locality, Place, GeoLocation } from "./interfaces"
-export { isLocality, isVoivodeship } from "./typeGuards"
+export { default as WeatherIcons } from "./WeatherIcons"
+export { VoivodeshipNames } from "./Enums"
+export { OWMCurrentResponse, Voivodeship, OWMOneCallResponse, OWMDailyForecast, Locality, Place, GeoLocation } from "./Interfaces"
+export { isLocality, isVoivodeship, isGeoLocation } from "./TypeGuards"
