@@ -1,0 +1,23 @@
+.loader {
+  transition: 0.3s ease-in-out opacity;
+  &--full-screen {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: $grey100;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &--hidden {
+    opacity: 0;
+  }
+
+  &__animation {
+    color: #fff;
+  }
+}
