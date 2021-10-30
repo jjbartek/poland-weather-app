@@ -1,11 +1,14 @@
+import "swiper/swiper.scss"
+
 import React, { useEffect, useRef } from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
-import "swiper/swiper.scss"
-import { Icon } from "."
-import { GetDateFromTimestamp } from "../Helpers"
-import { WeatherIcons } from "../Imports"
-import { OWMDailyForecast } from "../Imports/Interfaces"
+
 import { ForecastStyles } from "../Styles/Components"
+import { GetDateFromTimestamp } from "../Helpers"
+import { Icon } from "."
+import { OWMDailyForecast } from "../Imports/Interfaces"
+import { WeatherIcons } from "../Imports"
+
 interface Props {
   data: OWMDailyForecast[] | null
 }

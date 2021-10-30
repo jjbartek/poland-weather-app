@@ -1,7 +1,7 @@
-import React from "react"
-import { Helmet } from "react-helmet"
 import { Content } from "../Components"
+import { Helmet } from "react-helmet"
 import { Global as Layout } from "../Layouts"
+import React from "react"
 
 const Index = () => {
   return (

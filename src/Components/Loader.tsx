@@ -1,7 +1,8 @@
-import classNames from "classnames"
 import React, { useEffect, useState } from "react"
-import { Preloader } from "../Images"
+
 import { LoaderStyles } from "../Styles/Components"
+import { Preloader } from "../Images"
+import classNames from "classnames"
 
 interface Props {
   isLoading?: boolean

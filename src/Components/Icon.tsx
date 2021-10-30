@@ -1,6 +1,6 @@
-import classNames from "classnames"
-import React from "react"
 import { IconStyles } from "../Styles/Components"
+import React from "react"
+import classNames from "classnames"
 
 interface Props {
   name: keyof typeof IconStyles

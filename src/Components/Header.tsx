@@ -1,12 +1,13 @@
-import classNames from "classnames"
+import { GeoLocation, Locality, Place, isLocality, isVoivodeship } from "../Imports"
+import React, { useEffect, useRef, useState } from "react"
+
+import { HeaderStyles } from "../Styles/Components"
+import { Icon } from "."
 import { Link } from "gatsby"
 import _ from "lodash"
+import classNames from "classnames"
 import data from "polskie-miejscowosci"
-import React, { useEffect, useRef, useState } from "react"
-import { Icon } from "."
-import { GeoLocation, isLocality, isVoivodeship, Locality, Place } from "../Imports"
 import { isGeoLocation } from "../Imports/TypeGuards"
-import { HeaderStyles } from "../Styles/Components"
 
 const Header: React.FC<{
   setContentData: (place: Place) => void
