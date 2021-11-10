@@ -46,3 +46,5 @@ export const pressure: string;
 export const rain: string;
 export const visibility: string;
 export const weather: string;
+export const error: string;
+export const success: string;

@@ -1,0 +1,66 @@
+.prompts {
+  &__list {
+    position: absolute;
+    bottom: 4rem;
+    right: 4rem;
+    //min width dla wiekszych niz telefon
+    min-width: 300px;
+    width: 22%;
+    max-width: 100%;
+    z-index: 9999;
+  }
+
+  &__item {
+    background: $light;
+    box-shadow: 3px 4px 4px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    padding: 2.4rem 2rem;
+    margin-bottom: 2rem;
+    position: relative;
+  }
+
+  &__content {
+    font-size: 1.5rem;
+    line-height: 2.3rem;
+  }
+
+  &__title {
+    font-weight: bold;
+    display: block;
+  }
+
+  &__icon {
+    font-size: 4rem;
+    padding-right: 2rem;
+
+    &--success {
+      color: $promptGreen;
+    }
+
+    &--error {
+      color: $promptRed;
+    }
+  }
+
+  &__close {
+    height: 2.7rem;
+    width: 2.7rem;
+    border-radius: 50%;
+    background: $promptPink;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $light;
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 0;
+    border: none;
+    outline: none;
+  }
+}

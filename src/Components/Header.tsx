@@ -1,9 +1,10 @@
 import { GeoLocation, Locality, Place, isLocality, isVoivodeship } from "../Imports"
-import React, { useEffect, useRef, useState } from "react"
+import React, { useContext, useEffect, useRef, useState } from "react"
 
 import { HeaderStyles } from "../Styles/Components"
 import { Icon } from "."
 import { Link } from "gatsby"
+import { PromptContext } from "../Contexts/PromptContext"
 import _ from "lodash"
 import classNames from "classnames"
 import data from "polskie-miejscowosci"
@@ -20,6 +21,7 @@ const Header: React.FC<{
   const [searchResult, setSearchResult] = useState<Locality[]>([])
   const [focusedItem, setFocusedItem] = useState(0)
   const [isFieldFocused, setIsFieldFocused] = useState(false)
+  const { addPrompt } = useContext(PromptContext)!
 
   const handleFieldUpdate = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (e.target !== null) {
@@ -82,12 +84,12 @@ const Header: React.FC<{
       } as GeoLocation)
       console.log(latitude, longitude)
     } else {
-      alert("Dane są dostępne wyłącznie dla użytkowników na terenie Polski.")
+      addPrompt(0, "Wystapił błąd", "Dane są dostępne wyłącznie dla użytkowników na terenie Polski.")
     }
   }
 
   const handleGeoLocationError = () => {
-    alert("Wystąpił błąd podczas próby lokalizacji.")
+    addPrompt(0, "Wystapił błąd", "Nie udało się pobrać lokalizacji.")
   }
 
   const handleGeoLocationClick = () => {

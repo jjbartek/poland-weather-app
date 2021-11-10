@@ -1,9 +1,10 @@
 import { Content } from "../Components"
 import { Helmet } from "react-helmet"
 import { Global as Layout } from "../Layouts"
+import { PromptProvider } from "../Contexts/PromptContext"
 import React from "react"
 
-const Index = () => {
+const Index: React.FC = () => {
   return (
     <>
       <Helmet>
@@ -12,9 +13,11 @@ const Index = () => {
         <html lang="pl" />
         <meta name="description" content="Poland Weather App" />
       </Helmet>
-      <Layout>
-        <Content />
-      </Layout>
+      <PromptProvider>
+        <Layout>
+          <Content />
+        </Layout>
+      </PromptProvider>
     </>
   )
 }

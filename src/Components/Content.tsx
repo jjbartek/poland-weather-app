@@ -1,9 +1,10 @@
-import { Forecast, Header, Icon, Loader, Poland, Weather } from "."
+import { Forecast, Header, Icon, Loader, Poland, PromptList, Weather } from "."
 import { OWMOneCallResponse, Place } from "../Imports/Interfaces"
-import React, { useEffect, useRef, useState } from "react"
+import React, { useContext, useEffect, useRef, useState } from "react"
 import { isGeoLocation, isLocality, isVoivodeship } from "../Imports/TypeGuards"
 
 import { ContentStyles } from "../Styles/Components"
+import { PromptContext } from "../Contexts/PromptContext"
 import { Voivodeships } from "../Mocks"
 import classNames from "classnames"
 
@@ -14,6 +15,7 @@ const Content: React.FC = () => {
   const [loadingStatus, setLoadingStatus] = useState<boolean>(false)
   const [mapTitle, setMapTitle] = useState("wybierz swój region")
   const mapRef = useRef<SVGSVGElement | null>(null)
+  const { addPrompt } = useContext(PromptContext)!
 
   useEffect(() => {
     setIsForecastShown(false)
@@ -67,13 +69,14 @@ const Content: React.FC = () => {
       .then((response) => response.json())
       .then((response: OWMOneCallResponse) => {
         if (response.cod !== 200 && response.cod !== undefined) {
-          throw new Error()
+          throw Error("API Error")
+        } else {
+          setWeatherData(response)
         }
-
-        setWeatherData(response)
       })
-      .catch((e) => {
-        throw Error(e)
+      .catch(() => {
+        addPrompt(0, "Wystąpił błąd", "Nie udało pobrać się danych z Open Weather Map")
+        setContentData(null)
       })
       .finally(() => {
         setLoadingStatus(false)
@@ -128,6 +131,7 @@ const Content: React.FC = () => {
     <>
       <Header setContentData={handleContentDataSet} closeWeather={weatherClosed} contentData={contentData} />
       <div className={ContentStyles.content}>
+        <PromptList />
         <div className={classNames("wrapper", ContentStyles.contentContainer)}>
           <div className={classNames(ContentStyles.contentController, contentData !== null && ContentStyles.contentControllerHandled)}>
             <div className={ContentStyles.contentWrap}>

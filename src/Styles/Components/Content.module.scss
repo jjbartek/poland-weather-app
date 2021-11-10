@@ -8,6 +8,7 @@
     padding-top: 2rem;
     padding-bottom: 2rem;
     box-sizing: border-box;
+    position: relative;
 
     @include media(">=medium") {
       min-height: unset;
