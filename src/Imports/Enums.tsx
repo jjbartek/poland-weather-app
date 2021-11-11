@@ -16,3 +16,5 @@ export enum VoivodeshipNames {
   OPOLSKIE = "opolskie",
   DOLNOSLASKIE = "dolnoslaskie",
 }
+
+export default VoivodeshipNames

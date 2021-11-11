@@ -1,3 +1,5 @@
+import { VoivodeshipNames } from "."
+
 export interface OWMCurrentResponse {
   coord: {
     lon: number
@@ -56,7 +58,7 @@ export interface OWMCurrentResponse {
 
 export interface Voivodeship {
   api_id: number
-  slug: string // keyof typeof VoivodeshipNames
+  slug: VoivodeshipNames[keyof VoivodeshipNames]
   name: string
   capital: string
   lat: number
