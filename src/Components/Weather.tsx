@@ -73,52 +73,52 @@ const Weather: React.FC<Props> = ({ title, weatherData, handleIsForecastShownCha
     <>
       {weatherData ? (
         <>
-          <header className={WeatherStyles.weatherHeader}>
+          <header className={WeatherStyles.weather__header}>
             <h1>
               <b>POGODA</b> | {GetDateFromTimestamp(weatherData.current.dt, "date")}
             </h1>
             <p>{title}</p>
           </header>
-          <div className={WeatherStyles.weatherRow}>
+          <div className={WeatherStyles.weather__row}>
             <Icon name={WeatherIcons[weatherData.current.weather[0].icon]} />
-            <div className={WeatherStyles.weatherTemperature}>
+            <div className={WeatherStyles.weather__temperature}>
               {Math.round(weatherData.current.temp)}
               <sup>°C</sup>
             </div>
-            <div className={WeatherStyles.weatherDescription}>{weatherData.current.weather[0].description}</div>
+            <div className={WeatherStyles.weather__description}>{weatherData.current.weather[0].description}</div>
           </div>
-          <div className={WeatherStyles.weatherStats}>
-            <div className={WeatherStyles.weatherStatsRow}>
-              <span className={WeatherStyles.weatherStatsLabelWithIcon}>
+          <div className={WeatherStyles.weather__stats}>
+            <div className={WeatherStyles.weather__statsRow}>
+              <span className={WeatherStyles.weather__statsLabelWithIcon}>
                 <Icon name="weather" />
                 Odczuwalna:&nbsp;
               </span>
-              <span className={WeatherStyles.weatherStatsData}>{Math.round(weatherData.current.feels_like)}°C</span>
+              <span className={WeatherStyles.weather__statsData}>{Math.round(weatherData.current.feels_like)}°C</span>
             </div>
-            <div className={WeatherStyles.weatherStatsRow}>
-              <span className={WeatherStyles.weatherStatsLabelWithIcon}>
+            <div className={WeatherStyles.weather__statsRow}>
+              <span className={WeatherStyles.weather__statsLabelWithIcon}>
                 <Icon name="pressure" />
                 Ciśnienie:&nbsp;
               </span>
-              <span className={WeatherStyles.weatherStatsData}>{weatherData.current.pressure} hPa</span>
+              <span className={WeatherStyles.weather__statsData}>{weatherData.current.pressure} hPa</span>
             </div>
-            <div className={WeatherStyles.weatherStatsRow}>
-              <span className={WeatherStyles.weatherStatsLabelWithIcon}>
+            <div className={WeatherStyles.weather__statsRow}>
+              <span className={WeatherStyles.weather__statsLabelWithIcon}>
                 <Icon name="regularCloud" />
                 Zachmurzenie:&nbsp;
               </span>
-              <span className={WeatherStyles.weatherStatsData}>{weatherData.current.wind_speed}%</span>
+              <span className={WeatherStyles.weather__statsData}>{weatherData.current.wind_speed}%</span>
             </div>
-            <div className={WeatherStyles.weatherStatsRow}>
-              <span className={WeatherStyles.weatherStatsLabelWithIcon}>
+            <div className={WeatherStyles.weather__statsRow}>
+              <span className={WeatherStyles.weather__statsLabelWithIcon}>
                 <Icon name="wind" />
                 Wiatr:&nbsp;
               </span>
-              <span className={WeatherStyles.weatherStatsData}>{weatherData.current.wind_speed} m/s</span>
+              <span className={WeatherStyles.weather__statsData}>{weatherData.current.wind_speed} m/s</span>
             </div>
           </div>
-          <div className={WeatherStyles.weatherDataContainer}>
-            <div className={WeatherStyles.weatherChart}>
+          <div className={WeatherStyles.weather__dataContainer}>
+            <div className={WeatherStyles.weather__chart}>
               <Line data={chartData} options={options} />
             </div>
             <button

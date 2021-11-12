@@ -132,15 +132,15 @@ const Content: React.FC = () => {
       <Header setContentData={handleContentDataSet} closeWeather={weatherClosed} contentData={contentData} />
       <div className={ContentStyles.content}>
         <PromptList />
-        <div className={classNames("wrapper", ContentStyles.contentContainer)}>
-          <div className={classNames(ContentStyles.contentController, contentData !== null && ContentStyles.contentControllerHandled)}>
-            <div className={ContentStyles.contentWrap}>
-              <Poland ref={mapRef} className={ContentStyles.contentMap} />
+        <div className={classNames("wrapper", ContentStyles.content__container)}>
+          <div className={classNames(ContentStyles.content__controller, contentData !== null && ContentStyles.content__controllerHandled)}>
+            <div className={ContentStyles.content__wrap}>
+              <Poland ref={mapRef} className={ContentStyles.content__map} />
               {isLocality(contentData) && (
                 <>
                   <Icon
                     name="point"
-                    className={ContentStyles.contentPoint}
+                    className={ContentStyles.content__point}
                     style={{
                       bottom: `${getMapPosition(contentData.Longitude, contentData.Latitude).y}%`,
                       left: `${getMapPosition(contentData.Longitude, contentData.Latitude).x}%`,
@@ -152,7 +152,7 @@ const Content: React.FC = () => {
                 <>
                   <Icon
                     name="point"
-                    className={ContentStyles.contentPoint}
+                    className={ContentStyles.content__point}
                     style={{
                       bottom: `${getMapPosition(contentData.longitude, contentData.latitude).y}%`,
                       left: `${getMapPosition(contentData.longitude, contentData.latitude).x}%`,
@@ -161,10 +161,10 @@ const Content: React.FC = () => {
                 </>
               )}
             </div>
-            <h1 className={ContentStyles.contentTitle}>{mapTitle}</h1>
+            <h1 className={ContentStyles.content__title}>{mapTitle}</h1>
           </div>
           {contentData !== null && (
-            <div className={classNames(ContentStyles.contentSideBar, loadingStatus && ContentStyles.contentSideBarCentered)}>
+            <div className={classNames(ContentStyles.content__sideBar, loadingStatus && ContentStyles.content__sideBarCentered)}>
               {!loadingStatus && weatherData !== null ? (
                 <Weather title={getWeatherTitle()} weatherData={weatherData} handleIsForecastShownChange={handleIsForecastShownChange} />
               ) : (

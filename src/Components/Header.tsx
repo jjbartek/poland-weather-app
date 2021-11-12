@@ -156,29 +156,29 @@ const Header: React.FC<{
 
   return (
     <header className={HeaderStyles.header}>
-      <div className={`wrapper ${HeaderStyles.headerContainer}`}>
+      <div className={`wrapper ${HeaderStyles.header__container}`}>
         {contentData !== null ? (
           <>
-            <span onClick={handleCloseWeatherClick} className={HeaderStyles.headerIcon}>
+            <span onClick={handleCloseWeatherClick} className={HeaderStyles.header__icon}>
               <Icon name="arrowLeft" />
             </span>
-            <div className={HeaderStyles.headerTitle}>
+            <div className={HeaderStyles.header__title}>
               {isLocality(contentData) && (
-                <div className={HeaderStyles.headerTitle}>
+                <div className={HeaderStyles.header__title}>
                   {contentData.Name}, {contentData.Province}, p. {contentData.District}
                 </div>
               )}
-              {isVoivodeship(contentData) && <div className={HeaderStyles.headerTitle}>{contentData.name}</div>}
-              {isGeoLocation(contentData) && <div className={HeaderStyles.headerTitle}>Twoja lokalizacja</div>}
+              {isVoivodeship(contentData) && <div className={HeaderStyles.header__title}>{contentData.name}</div>}
+              {isGeoLocation(contentData) && <div className={HeaderStyles.header__title}>Twoja lokalizacja</div>}
             </div>
           </>
         ) : (
           <>
-            <Link to="/" className={HeaderStyles.headerIcon}>
+            <Link to="/" className={HeaderStyles.header__icon}>
               <Icon name="weather" />
             </Link>
             <textarea
-              className={HeaderStyles.headerField}
+              className={HeaderStyles.header__field}
               placeholder="wyszukaj miasto.."
               value={fieldValue}
               onChange={handleFieldUpdate}
@@ -188,11 +188,11 @@ const Header: React.FC<{
             />
 
             {searchResult.length > 0 && isFieldFocused && (
-              <ul ref={resultRef} className={HeaderStyles.headerResults}>
+              <ul ref={resultRef} className={HeaderStyles.header__results}>
                 {searchResult.map((item, i) => (
                   <li
                     key={i}
-                    className={classNames(HeaderStyles.headerResultsItem, i === focusedItem ? HeaderStyles.headerResultsItemActive : "")}
+                    className={classNames(HeaderStyles.header__resultsItem, i === focusedItem ? HeaderStyles.header__resultsItemActive : "")}
                     onClick={() => setContentData(item)}
                   >
                     {item.Name}, {item.Province}, p. {item.District}
@@ -204,7 +204,7 @@ const Header: React.FC<{
         )}
 
         {typeof window !== "undefined" && typeof window.navigator !== "undefined" && navigator.geolocation && (
-          <Icon onClick={handleGeoLocationClick} name="location" className={HeaderStyles.headerLocation} />
+          <Icon onClick={handleGeoLocationClick} name="location" className={HeaderStyles.header__location} />
         )}
       </div>
     </header>

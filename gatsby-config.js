@@ -1,10 +1,11 @@
 module.exports = {
   plugins: [
     {
-      resolve: `gatsby-plugin-scss-typescript`,
+      resolve: `gatsby-plugin-sass`,
       options: {
-        sassLoaderOptions: {
-          data: `@import "./src/Styles/Imports/_globals.scss";`,
+        sassOptions: {
+          //data: `@import "/src/Styles/Imports/_globals.scss";`,
+          includePaths: ["/src/Styles/"],
         },
       },
     },
@@ -24,7 +25,7 @@ module.exports = {
       },
     },
     `gatsby-plugin-typescript`,
-    `gatsby-plugin-tslint`,
     `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-dts-css-modules`,
   ],
 }

@@ -26,7 +26,7 @@ const Loader: React.FC<Props> = ({ isLoading = true, isfullScreen = false }) => 
     <div
       className={classNames(LoaderStyles.loader, isfullScreen ? LoaderStyles.loaderFullScreen : null, isLoading ? null : LoaderStyles.loaderHidden)}
     >
-      <img src={Preloader} className={LoaderStyles.loaderAnimation} />
+      <img src={Preloader} className={LoaderStyles.loader__animation} />
     </div>
   )
 }
