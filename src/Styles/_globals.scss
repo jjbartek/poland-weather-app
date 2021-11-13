@@ -21,3 +21,10 @@ $mq-breakpoints: (
 );
 
 $border-radius: 5px;
+
+$breakpoints: (
+  small: 320px,
+  medium: 768px,
+  large: 1024px,
+  xxl: 1440px,
+);

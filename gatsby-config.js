@@ -3,9 +3,11 @@ module.exports = {
     {
       resolve: `gatsby-plugin-sass`,
       options: {
+        implementation: require("sass"),
+        additionalData: `@import "globals";
+        @import "~include-media";`,
         sassOptions: {
-          //data: `@import "/src/Styles/Imports/_globals.scss";`,
-          includePaths: ["/src/Styles/"],
+          includePaths: [`${__dirname}/src/Styles`],
         },
       },
     },
