@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 
 export interface Prompt {
   id: number
@@ -18,9 +18,9 @@ interface PromptContextState {
   removePrompt: (id: number) => void
 }
 
-export type PromptContextType = null | PromptContextState
+type PromptContextType = null | PromptContextState
 
-export const PromptContext = React.createContext<null | PromptContextState>(null)
+export const PromptContext = React.createContext<PromptContextType>(null)
 
 export const PromptProvider: React.FC = ({ children }) => {
   const [prompts, setPrompts] = useState<Prompt[]>([])
@@ -51,7 +51,7 @@ export const PromptProvider: React.FC = ({ children }) => {
     }
   }
 
-  const addPrompt = (promptType: 0 | 1 | 2, title: string, message: string) => {
+  const addPrompt = (promptType: 0 | 1 | 2, title: string, message: string): void => {
     setPrompts((previousPrompts) => [
       ...previousPrompts,
       {
@@ -69,6 +69,16 @@ export const PromptProvider: React.FC = ({ children }) => {
   }
 
   return <PromptContext.Provider value={{ prompts, addPrompt, removePrompt }}>{children}</PromptContext.Provider>
+}
+
+export const PromptUseContext = (context: React.Context<PromptContextType>): PromptContextState => {
+  const c = useContext(context)
+
+  if (!c) {
+    throw new Error(`Error: Can't use prompt context when it's empty.`)
+  }
+
+  return c
 }
 
 export default PromptContext

@@ -56,7 +56,7 @@ const Weather: React.FC<Props> = ({ title, weatherData, handleIsForecastShownCha
     //   ],
     // },
   }
-  _.orderBy(weatherData.hourly, "dt", "asc").map((v) => {
+  _.orderBy(weatherData.hourly, "dt", "asc").forEach((v) => {
     const initialDate = new Date()
     const finalDate = new Date()
 

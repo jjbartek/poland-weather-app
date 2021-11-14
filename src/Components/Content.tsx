@@ -1,10 +1,10 @@
 import { Forecast, Header, Icon, Loader, Poland, PromptList, Weather } from "."
 import { OWMOneCallResponse, Place } from "../Imports/Interfaces"
-import React, { useContext, useEffect, useRef, useState } from "react"
+import { PromptContext, PromptUseContext } from "../Contexts/PromptContext"
+import React, { useEffect, useRef, useState } from "react"
 import { isGeoLocation, isLocality, isVoivodeship } from "../Imports/TypeGuards"
 
 import { ContentStyles } from "../Styles/Components"
-import { PromptContext } from "../Contexts/PromptContext"
 import { Voivodeships } from "../Mocks"
 import classNames from "classnames"
 
@@ -15,30 +15,53 @@ const Content: React.FC = () => {
   const [loadingStatus, setLoadingStatus] = useState<boolean>(false)
   const [mapTitle, setMapTitle] = useState("wybierz swój region")
   const mapRef = useRef<SVGSVGElement | null>(null)
-  const { addPrompt } = useContext(PromptContext)!
+  const { addPrompt } = PromptUseContext(PromptContext)
 
   useEffect(() => {
     setIsForecastShown(false)
     setWeatherData(null)
     setMapTitle("wybierz swój region")
 
-    mapRef.current!?.querySelectorAll(".fill-blue2").forEach((item) => {
-      item.classList.remove("fill-blue2")
-    })
+    const updateWeather = (lon: number, lat: number): void => {
+      setLoadingStatus(true)
 
-    if (isLocality(contentData)) {
-      updateWeather(contentData.Longitude, contentData.Latitude)
-      setMapTitle(contentData.Name)
-    } else if (isVoivodeship(contentData)) {
-      updateWeather(contentData.lon, contentData.lat)
-      setMapTitle(contentData.name)
-
-      mapRef.current!?.querySelector(`#${contentData.slug}`)?.classList.add("fill-blue2")
-    } else if (isGeoLocation(contentData)) {
-      updateWeather(contentData.longitude, contentData.latitude)
-      setMapTitle(`Twoja lokalizacja`)
+      fetch(`https://api.openweathermap.org/data/2.5/onecall?lon=${lon}&lat=${lat}&appid=${process.env.GATSBY_OWM_KEY}&lang=pl&units=metric`)
+        .then((response) => response.json())
+        .then((response: OWMOneCallResponse) => {
+          if (response.cod !== 200 && response.cod !== undefined) {
+            throw Error("API Error")
+          } else {
+            setWeatherData(response)
+          }
+        })
+        .catch(() => {
+          addPrompt(0, "Wystąpił błąd", "Nie udało pobrać się danych z Open Weather Map")
+          setContentData(null)
+        })
+        .finally(() => {
+          setLoadingStatus(false)
+        })
     }
-  }, [contentData])
+
+    if (mapRef.current) {
+      mapRef.current.querySelectorAll(".fill-blue2").forEach((item) => {
+        item.classList.remove("fill-blue2")
+      })
+
+      if (isLocality(contentData)) {
+        updateWeather(contentData.Longitude, contentData.Latitude)
+        setMapTitle(contentData.Name)
+      } else if (isVoivodeship(contentData)) {
+        updateWeather(contentData.lon, contentData.lat)
+        setMapTitle(contentData.name)
+
+        mapRef.current.querySelector(`#${contentData.slug}`)?.classList.add("fill-blue2")
+      } else if (isGeoLocation(contentData)) {
+        updateWeather(contentData.longitude, contentData.latitude)
+        setMapTitle(`Twoja lokalizacja`)
+      }
+    }
+  }, [addPrompt, contentData])
 
   useEffect(() => {
     const handleVoivodeshipClick = (event: MouseEvent): void => {
@@ -49,39 +72,20 @@ const Content: React.FC = () => {
       }
     }
 
-    if (mapRef.current) {
-      const allPaths = mapRef.current.querySelectorAll("path")
+    const map = mapRef.current
+
+    if (map) {
+      const allPaths = map.querySelectorAll("path")
       allPaths.forEach((voivodeship: SVGPathElement) => voivodeship.addEventListener("click", handleVoivodeshipClick))
     }
 
     return () => {
-      if (mapRef.current) {
-        const allPaths = mapRef.current.querySelectorAll("path")
+      if (map) {
+        const allPaths = map.querySelectorAll("path")
         allPaths.forEach((voivodeship: SVGPathElement) => voivodeship.removeEventListener("click", handleVoivodeshipClick))
       }
     }
-  })
-
-  const updateWeather = (lon: number, lat: number) => {
-    setLoadingStatus(true)
-
-    fetch(`https://api.openweathermap.org/data/2.5/onecall?lon=${lon}&lat=${lat}&appid=${process.env.GATSBY_OWM_KEY}&lang=pl&units=metric`)
-      .then((response) => response.json())
-      .then((response: OWMOneCallResponse) => {
-        if (response.cod !== 200 && response.cod !== undefined) {
-          throw Error("API Error")
-        } else {
-          setWeatherData(response)
-        }
-      })
-      .catch(() => {
-        addPrompt(0, "Wystąpił błąd", "Nie udało pobrać się danych z Open Weather Map")
-        setContentData(null)
-      })
-      .finally(() => {
-        setLoadingStatus(false)
-      })
-  }
+  }, [mapRef])
 
   const handleContentDataSet = (place: Place) => {
     setContentData(place)

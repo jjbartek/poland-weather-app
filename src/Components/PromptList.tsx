@@ -1,12 +1,12 @@
-import React, { useContext } from "react"
+import { PromptContext, PromptUseContext } from "../Contexts/PromptContext"
 
 import { Icon } from "."
-import { PromptContext } from "../Contexts/PromptContext"
 import { PromptStyles } from "../Styles/Components"
+import React from "react"
 import classNames from "classnames"
 
 const PromptList: React.FC = () => {
-  const { prompts, removePrompt } = useContext(PromptContext)!
+  const { prompts, removePrompt } = PromptUseContext(PromptContext)
 
   return (
     <div className={PromptStyles.prompts__list}>

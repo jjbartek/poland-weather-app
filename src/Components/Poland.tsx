@@ -71,4 +71,6 @@ const Poland = React.forwardRef<SVGSVGElement, React.HTMLProps<SVGSVGElement>>((
     </g>
   </svg>
 ))
+Poland.displayName = "Poland"
+
 export default Poland

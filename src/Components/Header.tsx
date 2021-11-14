@@ -1,10 +1,10 @@
 import { GeoLocation, Locality, Place, isLocality, isVoivodeship } from "../Imports"
-import React, { useContext, useEffect, useRef, useState } from "react"
+import { PromptContext, PromptUseContext } from "../Contexts/PromptContext"
+import React, { useEffect, useRef, useState } from "react"
 
 import { HeaderStyles } from "../Styles/Components"
 import { Icon } from "."
 import { Link } from "gatsby"
-import { PromptContext } from "../Contexts/PromptContext"
 import _ from "lodash"
 import classNames from "classnames"
 import data from "polskie-miejscowosci"
@@ -21,7 +21,7 @@ const Header: React.FC<{
   const [searchResult, setSearchResult] = useState<Locality[]>([])
   const [focusedItem, setFocusedItem] = useState(0)
   const [isFieldFocused, setIsFieldFocused] = useState(false)
-  const { addPrompt } = useContext(PromptContext)!
+  const { addPrompt } = PromptUseContext(PromptContext)
 
   const handleFieldUpdate = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (e.target !== null) {
@@ -82,7 +82,6 @@ const Header: React.FC<{
         latitude,
         longitude,
       } as GeoLocation)
-      console.log(latitude, longitude)
     } else {
       addPrompt(0, "Wystapił błąd", "Dane są dostępne wyłącznie dla użytkowników na terenie Polski.")
     }
@@ -107,9 +106,12 @@ const Header: React.FC<{
     } else if (searchResult.length > 0) {
       setSearchResult([])
     }
-  }, [fieldValue])
+  }, [fieldValue, searchResult.length])
 
   useEffect(() => {
+    const currentResult = resultRef.current
+    const currentField = fieldRef.current
+
     const handleMouseDown = (e: MouseEvent) => {
       const path = []
       let element = e.target as HTMLElement | null
@@ -119,7 +121,7 @@ const Header: React.FC<{
         element = element.parentElement
       }
 
-      if (document.activeElement === fieldRef.current && (e.target === resultRef.current || path.includes(resultRef.current))) {
+      if (document.activeElement === currentField && (e.target === currentResult || path.includes(currentResult))) {
         e.preventDefault()
         e.stopPropagation()
 
@@ -135,20 +137,20 @@ const Header: React.FC<{
       setIsFieldFocused(false)
     }
 
-    if (fieldRef.current) {
+    if (currentField) {
       document.addEventListener("mousedown", handleMouseDown)
-      fieldRef.current.addEventListener("focusin", handleFocusIn)
-      fieldRef.current.addEventListener("focusout", handleFocusOut)
+      currentField.addEventListener("focusin", handleFocusIn)
+      currentField.addEventListener("focusout", handleFocusOut)
     }
 
     return () => {
       document.removeEventListener("mousedown", handleMouseDown)
-      if (fieldRef.current) {
-        fieldRef.current.removeEventListener("focusin", handleFocusIn)
-        fieldRef.current.removeEventListener("focusout", handleFocusOut)
+      if (currentField) {
+        currentField.removeEventListener("focusin", handleFocusIn)
+        currentField.removeEventListener("focusout", handleFocusOut)
       }
     }
-  }, [fieldRef, fieldRef.current])
+  }, [fieldRef, resultRef])
 
   useEffect(() => {
     setFieldValue("")
