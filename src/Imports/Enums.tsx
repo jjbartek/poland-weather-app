@@ -17,4 +17,9 @@ export enum VoivodeshipNames {
   DOLNOSLASKIE = "dolnoslaskie",
 }
 
-export default VoivodeshipNames
+export enum Coords {
+  POLAND_LONGITUDE_MIN = 14.116,
+  POLAND_LONGITUDE_MAX = 24.15,
+  POLAND_LATITUDE_MIN = 49,
+  POLAND_LATITUDE_MAX = 54.83,
+}

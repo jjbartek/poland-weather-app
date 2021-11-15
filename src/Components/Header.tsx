@@ -1,5 +1,4 @@
-import { GeoLocation, Locality, Place, isLocality, isVoivodeship } from "../Imports"
-import { PromptContext, PromptUseContext } from "../Contexts/PromptContext"
+import { Locality, Place, isLocality, isVoivodeship } from "../Imports"
 import React, { useEffect, useRef, useState } from "react"
 
 import { HeaderStyles } from "../Styles/Components"
@@ -13,15 +12,15 @@ import { isGeoLocation } from "../Imports/TypeGuards"
 const Header: React.FC<{
   setContentData: (place: Place) => void
   closeWeather: () => void
+  getWeatherFromLocation: () => void
   contentData: Place
-}> = ({ setContentData, closeWeather, contentData }) => {
+}> = ({ setContentData, closeWeather, getWeatherFromLocation, contentData }) => {
   const resultRef = useRef<HTMLUListElement>(null)
   const fieldRef = useRef<HTMLTextAreaElement>(null)
   const [fieldValue, setFieldValue] = useState("")
   const [searchResult, setSearchResult] = useState<Locality[]>([])
   const [focusedItem, setFocusedItem] = useState(0)
   const [isFieldFocused, setIsFieldFocused] = useState(false)
-  const { addPrompt } = PromptUseContext(PromptContext)
 
   const handleFieldUpdate = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (e.target !== null) {
@@ -63,37 +62,6 @@ const Header: React.FC<{
           inline: "end",
         })
       }
-    }
-  }
-
-  const handleCloseWeatherClick = () => {
-    closeWeather()
-  }
-
-  const handleGeoLocationSuccess = ({ coords: { latitude, longitude } }: GeolocationPosition) => {
-    const xMin = 14.116
-    const xMax = 24.15
-
-    const yMin = 49
-    const yMax = 54.83
-
-    if (latitude >= yMin && latitude <= yMax && longitude >= xMin && longitude <= xMax) {
-      setContentData({
-        latitude,
-        longitude,
-      } as GeoLocation)
-    } else {
-      addPrompt(0, "Wystapił błąd", "Dane są dostępne wyłącznie dla użytkowników na terenie Polski.")
-    }
-  }
-
-  const handleGeoLocationError = () => {
-    addPrompt(0, "Wystapił błąd", "Nie udało się pobrać lokalizacji.")
-  }
-
-  const handleGeoLocationClick = () => {
-    if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
-      navigator.geolocation.getCurrentPosition(handleGeoLocationSuccess, handleGeoLocationError)
     }
   }
 
@@ -161,7 +129,7 @@ const Header: React.FC<{
       <div className={`wrapper ${HeaderStyles.header__container}`}>
         {contentData !== null ? (
           <>
-            <span onClick={handleCloseWeatherClick} className={HeaderStyles.header__icon}>
+            <span onClick={() => closeWeather()} className={HeaderStyles.header__icon}>
               <Icon name="arrowLeft" />
             </span>
             <div className={HeaderStyles.header__title}>
@@ -205,9 +173,7 @@ const Header: React.FC<{
           </>
         )}
 
-        {typeof window !== "undefined" && typeof window.navigator !== "undefined" && navigator.geolocation && (
-          <Icon onClick={handleGeoLocationClick} name="location" className={HeaderStyles.header__location} />
-        )}
+        {!isGeoLocation(contentData) && <Icon onClick={() => getWeatherFromLocation()} name="location" className={HeaderStyles.header__location} />}
       </div>
     </header>
   )

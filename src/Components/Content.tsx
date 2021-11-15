@@ -1,7 +1,8 @@
 import { Forecast, Header, Icon, Loader, Poland, PromptList, Weather } from "."
-import { OWMOneCallResponse, Place } from "../Imports/Interfaces"
+import { GeoLocation, OWMOneCallResponse, Place } from "../Imports/Interfaces"
 import { PromptContext, PromptUseContext } from "../Contexts/PromptContext"
 import React, { useEffect, useRef, useState } from "react"
+import { getMapPosition, isLocationInPoland } from "../Commons/Location"
 import { isGeoLocation, isLocality, isVoivodeship } from "../Imports/TypeGuards"
 
 import { ContentStyles } from "../Styles/Components"
@@ -105,35 +106,34 @@ const Content: React.FC = () => {
     }
   }
 
-  const weatherClosed = () => {
-    setContentData(null)
-  }
-
-  const getMapPosition = (Longitude: number, Latitude: number): { x: number; y: number } => {
-    // MOVE TO LOCATION.TSX COMMON
-    // x,y are Poland's points of extremity
-
-    const xMin = 14.116
-    const xMax = 24.15
-
-    const yMin = 49
-    const yMax = 54.83
-
-    const xLength = xMax - xMin
-    const yLength = yMax - yMin
-
-    const posX = ((Longitude - xMin) / xLength) * 100
-    const posY = ((Latitude - yMin) / yLength) * 100
-
-    return {
-      x: parseFloat(posX.toFixed(3)),
-      y: parseFloat(posY.toFixed(3)),
+  const getWeatherFromLocation = (): void => {
+    if (typeof window !== "undefined" && typeof window.navigator !== "undefined" && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        ({ coords: { latitude, longitude } }: GeolocationPosition) => {
+          if (isLocationInPoland(latitude, longitude)) {
+            setContentData({
+              latitude,
+              longitude,
+            } as GeoLocation)
+          } else {
+            addPrompt(0, "Wystapił błąd", "Aplikacja obsługuje wyłącznie pogodę na obszarze Polski.")
+          }
+        },
+        () => {
+          addPrompt(0, "Wystapił błąd", "Nie udało się pobrać lokalizacji.")
+        }
+      )
     }
   }
 
   return (
     <>
-      <Header setContentData={handleContentDataSet} closeWeather={weatherClosed} contentData={contentData} />
+      <Header
+        setContentData={handleContentDataSet}
+        getWeatherFromLocation={getWeatherFromLocation}
+        closeWeather={() => setContentData(null)}
+        contentData={contentData}
+      />
       <div className={ContentStyles.content}>
         <PromptList />
         <div className={classNames("wrapper", ContentStyles.content__container)}>

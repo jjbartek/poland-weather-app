@@ -1,26 +1,23 @@
-// import { GeoLocation } from "../Imports"
-// import { isGeoLocation } from "../Imports/TypeGuards"
+import { Coords } from "../Imports"
 
-// export const isLocationInPoland = ({ coords: { latitude, longitude } }: GeolocationPosition) => {
-//   const xMin = 14.116
-//   const xMax = 24.15
+export const isLocationInPoland = (latitude: number, longitude: number): boolean => {
+  return latitude >= Coords.POLAND_LATITUDE_MIN &&
+    latitude <= Coords.POLAND_LATITUDE_MAX &&
+    longitude >= Coords.POLAND_LONGITUDE_MIN &&
+    longitude <= Coords.POLAND_LONGITUDE_MAX
+    ? true
+    : false
+}
 
-//   const yMin = 49
-//   const yMax = 54.83
+export const getMapPosition = (longitude: number, latitude: number): { x: number; y: number } => {
+  const xLength = Coords.POLAND_LONGITUDE_MAX - Coords.POLAND_LONGITUDE_MIN
+  const yLength = Coords.POLAND_LATITUDE_MAX - Coords.POLAND_LATITUDE_MIN
 
-//   return latitude >= yMin && latitude <= yMax && longitude >= xMin && longitude <= xMax ? 1 : 0
-// }
+  const posX = ((longitude - Coords.POLAND_LONGITUDE_MIN) / xLength) * 100
+  const posY = ((latitude - Coords.POLAND_LATITUDE_MIN) / yLength) * 100
 
-// // export const displayError() CREATE SHARED COMPONENT (NOT LOCATION ONLY)
-
-// export const handleGeoLocationError = () => {
-//   alert("Wystąpił błąd podczas próby lokalizacji.")
-// }
-
-// export const handleGeoLocationClick = () => {
-//   if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
-//     navigator.geolocation.getCurrentPosition(handleGeoLocationSuccess, handleGeoLocationError)
-//   }
-// }
-
-// move get position
+  return {
+    x: parseFloat(posX.toFixed(3)),
+    y: parseFloat(posY.toFixed(3)),
+  }
+}
