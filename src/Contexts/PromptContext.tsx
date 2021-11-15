@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useCallback, useContext, useEffect, useState } from "react"
 
 export interface Prompt {
   id: number
@@ -51,7 +51,7 @@ export const PromptProvider: React.FC = ({ children }) => {
     }
   }
 
-  const addPrompt = (promptType: 0 | 1 | 2, title: string, message: string): void => {
+  const addPrompt = useCallback((promptType: 0 | 1 | 2, title: string, message: string) => {
     setPrompts((previousPrompts) => [
       ...previousPrompts,
       {
@@ -62,7 +62,7 @@ export const PromptProvider: React.FC = ({ children }) => {
         title,
       } as Prompt,
     ])
-  }
+  }, [])
 
   const removePrompt = (id: number) => {
     setPrompts((previousPrompts) => previousPrompts.filter((prompt) => prompt.id !== id))
