@@ -57,6 +57,10 @@
     border-top: 1px solid $blue;
     list-style: none;
 
+    &--hidden {
+      display: none;
+    }
+
     @include media(">=medium") {
       top: 90px;
       padding: 23px 31px 31px 31px;

@@ -113,12 +113,13 @@ const Header: React.FC<{
 
     return () => {
       document.removeEventListener("mousedown", handleMouseDown)
+
       if (currentField) {
         currentField.removeEventListener("focusin", handleFocusIn)
         currentField.removeEventListener("focusout", handleFocusOut)
       }
     }
-  }, [fieldRef, resultRef])
+  }, [fieldRef, resultRef, contentData])
 
   useEffect(() => {
     setFieldValue("")
@@ -157,19 +158,20 @@ const Header: React.FC<{
               ref={fieldRef}
             />
 
-            {searchResult.length > 0 && isFieldFocused && (
-              <ul ref={resultRef} className={HeaderStyles.header__results}>
-                {searchResult.map((item, i) => (
-                  <li
-                    key={i}
-                    className={classNames(HeaderStyles.header__resultsItem, i === focusedItem ? HeaderStyles.header__resultsItemActive : "")}
-                    onClick={() => setContentData(item)}
-                  >
-                    {item.Name}, {item.Province}, p. {item.District}
-                  </li>
-                ))}
-              </ul>
-            )}
+            <ul
+              ref={resultRef}
+              className={classNames(HeaderStyles.header__results, !(searchResult.length > 0 && isFieldFocused) && HeaderStyles.header__resultsHidden)}
+            >
+              {searchResult.map((item, i) => (
+                <li
+                  key={i}
+                  className={classNames(HeaderStyles.header__resultsItem, i === focusedItem ? HeaderStyles.header__resultsItemActive : "")}
+                  onClick={() => setContentData(item)}
+                >
+                  {item.Name}, {item.Province}, p. {item.District}
+                </li>
+              ))}
+            </ul>
           </>
         )}
 

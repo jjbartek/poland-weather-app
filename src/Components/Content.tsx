@@ -25,7 +25,6 @@ const Content: React.FC = () => {
 
     const updateWeather = (lon: number, lat: number): void => {
       setLoadingStatus(true)
-
       fetch(`https://api.openweathermap.org/data/2.5/onecall?lon=${lon}&lat=${lat}&appid=${process.env.GATSBY_OWM_KEY}&lang=pl&units=metric`)
         .then((response) => response.json())
         .then((response: OWMOneCallResponse) => {
